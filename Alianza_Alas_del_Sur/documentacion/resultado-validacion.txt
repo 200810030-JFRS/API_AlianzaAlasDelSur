@@ -1,0 +1,11 @@
+OK XML de origen: AeroNorte
+OK JSON de origen: SurJet
+OK JSON de origen: CaribeAir
+OK JSON canónico: aeronorte
+OK XML canónico: aeronorte
+OK JSON canónico: surjet
+OK XML canónico: surjet
+OK JSON canónico: caribeair
+OK XML canónico: caribeair
+
+Validaciones aprobadas: 9

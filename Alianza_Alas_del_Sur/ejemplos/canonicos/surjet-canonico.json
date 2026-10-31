@@ -1,0 +1,25 @@
+{
+  "idReserva": "8e2d7d6a-9c45-4b9f-a2e1-031c00a00002",
+  "aerolinea": "SURJET",
+  "referenciaOrigen": "SJ-88412",
+  "vuelo": {
+    "fechaVuelo": "2026-04-03",
+    "horaLocal": "08:30:00",
+    "desfaseUtc": "-06:00"
+  },
+  "pasajero": {
+    "tipo": "ADULTO",
+    "nombre": "Ana",
+    "apellido": "García",
+    "edad": 34
+  },
+  "tarifa": {
+    "importe": 260.0,
+    "moneda": "USD"
+  },
+  "equipaje": {
+    "pesoTotalKg": 22.68,
+    "unidadOrigen": "LB",
+    "valorOrigen": "50"
+  }
+}

@@ -1,0 +1,24 @@
+digraph ModeloCanonico {
+  graph [rankdir=TB, bgcolor="white", pad="0.25", nodesep="0.45", ranksep="0.65", fontname="Arial", label="Modelo canónico - Alianza Alas del Sur", labelloc="t", fontsize=18];
+  node [shape=record, style="rounded,filled", fillcolor="#F3F7FA", color="#315A75", fontname="Arial", fontsize=10, margin="0.12,0.08"];
+  edge [color="#526D82", fontname="Arial", fontsize=9, arrowsize=0.8];
+  Reserva [label="{ReservaCanonica|idReserva: UUID\laerolinea: Aerolinea\lreferenciaOrigen: String\l}"];
+  Vuelo [label="{Vuelo|fechaVuelo: LocalDate\lhoraLocal: LocalTime [0..1]\ldesfaseUtc: String [0..1]\l}"];
+  Pasajero [label="{Pasajero (abstracta)|nombre: String\lapellido: String\ledad: Integer [0..1]\l}"];
+  Tarifa [label="{Tarifa|importe: BigDecimal\lmoneda: String\l}"];
+  Equipaje [label="{Equipaje|pesoTotalKg: BigDecimal [0..1]\lnumeroPiezas: Integer [0..1]\lunidadOrigen: String\lvalorOrigen: String\llimiteKgPorPieza: BigDecimal [0..1]\l}"];
+  Adulto [label="{Adulto|tipo = ADULTO}", fillcolor="#EAF4EF"];
+  Menor [label="{Menor|tipo = MENOR}", fillcolor="#EAF4EF"];
+  Infante [label="{Infante|tipo = INFANTE}", fillcolor="#EAF4EF"];
+  Aerolinea [shape=ellipse, label="Aerolinea\nAERONORTE | SURJET | CARIBEAIR", fillcolor="#FFF6E5", color="#B68B3B"];
+  Reserva -> Vuelo [label="1 : 1", dir=both, arrowtail=diamond, arrowhead=none];
+  Reserva -> Pasajero [label="1 : 1", dir=both, arrowtail=diamond, arrowhead=none];
+  Reserva -> Tarifa [label="1 : 1", dir=both, arrowtail=diamond, arrowhead=none];
+  Reserva -> Equipaje [label="1 : 1", dir=both, arrowtail=diamond, arrowhead=none];
+  Reserva -> Aerolinea [label="1", style=dashed, arrowhead=vee];
+  Adulto -> Pasajero [arrowhead=empty, style=solid];
+  Menor -> Pasajero [arrowhead=empty, style=solid];
+  Infante -> Pasajero [arrowhead=empty, style=solid];
+  {rank=same; Vuelo; Pasajero; Tarifa; Equipaje; Aerolinea;}
+  {rank=same; Adulto; Menor; Infante;}
+}

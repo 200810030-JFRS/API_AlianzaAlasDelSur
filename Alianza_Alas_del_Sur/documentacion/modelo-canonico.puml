@@ -1,0 +1,53 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class ReservaCanonica {
+  +UUID idReserva
+  +Aerolinea aerolinea
+  +String referenciaOrigen
+}
+
+class Vuelo {
+  +LocalDate fechaVuelo
+  +LocalTime horaLocal
+  +String desfaseUtc
+}
+
+abstract class Pasajero {
+  +String nombre
+  +String apellido
+  +Integer edad
+}
+class Adulto
+class Menor
+class Infante
+
+class Tarifa {
+  +BigDecimal importe
+  +String moneda
+}
+
+class Equipaje {
+  +BigDecimal pesoTotalKg
+  +Integer numeroPiezas
+  +String unidadOrigen
+  +String valorOrigen
+  +BigDecimal limiteKgPorPieza
+}
+
+enum Aerolinea {
+  AERONORTE
+  SURJET
+  CARIBEAIR
+}
+
+ReservaCanonica "1" *-- "1" Vuelo
+ReservaCanonica "1" *-- "1" Pasajero
+ReservaCanonica "1" *-- "1" Tarifa
+ReservaCanonica "1" *-- "1" Equipaje
+Pasajero <|-- Adulto
+Pasajero <|-- Menor
+Pasajero <|-- Infante
+ReservaCanonica --> Aerolinea
+@enduml

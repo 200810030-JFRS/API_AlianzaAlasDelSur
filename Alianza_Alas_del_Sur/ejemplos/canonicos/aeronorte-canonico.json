@@ -1,0 +1,22 @@
+{
+  "idReserva": "8e2d7d6a-9c45-4b9f-a2e1-031c00a00001",
+  "aerolinea": "AERONORTE",
+  "referenciaOrigen": "QX7Z2A",
+  "vuelo": {
+    "fechaVuelo": "2026-04-03"
+  },
+  "pasajero": {
+    "tipo": "ADULTO",
+    "nombre": "Ana",
+    "apellido": "Garcia"
+  },
+  "tarifa": {
+    "importe": 4500.0,
+    "moneda": "MXN"
+  },
+  "equipaje": {
+    "pesoTotalKg": 23.0,
+    "unidadOrigen": "KG",
+    "valorOrigen": "23"
+  }
+}

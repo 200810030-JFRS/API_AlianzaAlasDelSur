@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://alasdelsur.example/canonico"
+           xmlns:tns="https://alasdelsur.example/canonico"
+           elementFormDefault="qualified">
+    <xs:simpleType name="UuidType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AerolineaType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AERONORTE"/>
+            <xs:enumeration value="SURJET"/>
+            <xs:enumeration value="CARIBEAIR"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MonedaType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NombreType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReferenciaType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ImporteType">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0.01"/>
+            <xs:fractionDigits value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PositivoType">
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+    <xs:simpleType name="PesoType">
+        <xs:restriction base="xs:decimal">
+            <xs:minExclusive value="0"/>
+            <xs:fractionDigits value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UnidadOrigenType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="KG"/>
+            <xs:enumeration value="LB"/>
+            <xs:enumeration value="PIEZA"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OffsetType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PasajeroBaseType">
+        <xs:sequence>
+            <xs:element name="nombre" type="tns:NombreType"/>
+            <xs:element name="apellido" type="tns:NombreType"/>
+            <xs:element name="edad" type="xs:nonNegativeInteger" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AdultoType">
+        <xs:complexContent>
+            <xs:extension base="tns:PasajeroBaseType">
+                <xs:attribute name="tipo" use="required" fixed="ADULTO"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MenorType">
+        <xs:complexContent>
+            <xs:extension base="tns:PasajeroBaseType">
+                <xs:attribute name="tipo" use="required" fixed="MENOR"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="InfanteType">
+        <xs:complexContent>
+            <xs:extension base="tns:PasajeroBaseType">
+                <xs:attribute name="tipo" use="required" fixed="INFANTE"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PasajeroType">
+        <xs:choice>
+            <xs:element name="adulto" type="tns:AdultoType"/>
+            <xs:element name="menor" type="tns:MenorType"/>
+            <xs:element name="infante" type="tns:InfanteType"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="VueloType">
+        <xs:sequence>
+            <xs:element name="fechaVuelo" type="xs:date"/>
+            <xs:element name="horaLocal" type="xs:time" minOccurs="0"/>
+            <xs:element name="desfaseUtc" type="tns:OffsetType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TarifaType">
+        <xs:sequence>
+            <xs:element name="importe" type="tns:ImporteType"/>
+            <xs:element name="moneda" type="tns:MonedaType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EquipajeType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="pesoTotalKg" type="tns:PesoType"/>
+                <xs:element name="numeroPiezas" type="tns:PositivoType"/>
+            </xs:choice>
+            <xs:element name="unidadOrigen" type="tns:UnidadOrigenType"/>
+            <xs:element name="valorOrigen" type="tns:NombreType"/>
+            <xs:element name="limiteKgPorPieza" type="tns:PesoType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="reservaCanonica">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="aerolinea" type="tns:AerolineaType"/>
+                <xs:element name="referenciaOrigen" type="tns:ReferenciaType"/>
+                <xs:element name="vuelo" type="tns:VueloType"/>
+                <xs:element name="pasajero" type="tns:PasajeroType"/>
+                <xs:element name="tarifa" type="tns:TarifaType"/>
+                <xs:element name="equipaje" type="tns:EquipajeType"/>
+            </xs:sequence>
+            <xs:attribute name="idReserva" type="tns:UuidType" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

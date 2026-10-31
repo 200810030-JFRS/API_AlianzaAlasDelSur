@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reserva>
+    <pnr>QX7Z2A</pnr>
+    <pasajero>GARCIA/ANA</pasajero>
+    <fecha>03/04/2026</fecha>
+    <tarifa>4500</tarifa>
+    <equipaje>23</equipaje>
+    <menor>N</menor>
+</reserva>

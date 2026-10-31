@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reservaCanonica xmlns="https://alasdelsur.example/canonico" idReserva="8e2d7d6a-9c45-4b9f-a2e1-031c00a00003">
+    <aerolinea>CARIBEAIR</aerolinea>
+    <referenciaOrigen>99812</referenciaOrigen>
+    <vuelo>
+        <fechaVuelo>2026-04-03</fechaVuelo>
+    </vuelo>
+    <pasajero><adulto tipo="ADULTO"><nombre>Ana</nombre><apellido>Garcia</apellido></adulto></pasajero>
+    <tarifa>
+        <importe>4500.00</importe>
+        <moneda>MXN</moneda>
+    </tarifa>
+    <equipaje>
+        <numeroPiezas>1</numeroPiezas>
+        <unidadOrigen>PIEZA</unidadOrigen>
+        <valorOrigen>1 pieza</valorOrigen>
+        <limiteKgPorPieza>23.00</limiteKgPorPieza>
+    </equipaje>
+</reservaCanonica>

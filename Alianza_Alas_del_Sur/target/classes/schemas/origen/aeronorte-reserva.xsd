@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="LocalizadorType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NombreType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^/]+/[^/]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FechaType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-3][0-9]/[0-1][0-9]/[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MontoType">
+        <xs:restriction base="xs:decimal">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MenorType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="S"/>
+            <xs:enumeration value="N"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="reserva">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pnr" type="LocalizadorType"/>
+                <xs:element name="pasajero" type="NombreType"/>
+                <xs:element name="fecha" type="FechaType"/>
+                <xs:element name="tarifa" type="MontoType"/>
+                <xs:element name="equipaje" type="MontoType"/>
+                <xs:element name="menor" type="MenorType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

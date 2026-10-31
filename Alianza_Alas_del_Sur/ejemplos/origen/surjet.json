@@ -1,0 +1,12 @@
+{
+  "booking": "SJ-88412",
+  "firstName": "Ana",
+  "lastName": "García",
+  "flightDate": "2026-04-03T08:30:00-06:00",
+  "fare": {
+    "amount": 260,
+    "currency": "USD"
+  },
+  "bagsLb": 50,
+  "age": 34
+}

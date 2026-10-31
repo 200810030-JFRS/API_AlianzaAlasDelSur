@@ -1,0 +1,333 @@
+{
+  "info": {
+    "_postman_id": "7b9293cc-0a21-4d85-a0ce-c37ce91f6b26",
+    "name": "Alianza Alas del Sur - API",
+    "description": "Colección de diez pruebas para validar la API canónica. Ejecutar en orden y con la aplicación iniciada.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "idReservaAeroNorte",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "idReservaSurJet",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "idReservaCaribeAir",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Estado de la API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/health"
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"API disponible\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Transformar AeroNorte",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/xml",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/transformaciones/aeronorte"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<reserva>\n  <pnr>QX7Z2A</pnr>\n  <pasajero>GARCIA/ANA</pasajero>\n  <fecha>03/04/2026</fecha>\n  <tarifa>4500</tarifa>\n  <equipaje>23</equipaje>\n  <menor>N</menor>\n</reserva>",
+          "options": {
+            "raw": {
+              "language": "xml"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"AeroNorte transformado\", function () { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.collectionVariables.set(\"idReservaAeroNorte\", data.idReserva);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Transformar SurJet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/transformaciones/surjet"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"booking\": \"SJ-88412\",\n  \"firstName\": \"Ana\",\n  \"lastName\": \"García\",\n  \"flightDate\": \"2026-04-03T08:30:00-06:00\",\n  \"fare\": {\n    \"amount\": 260,\n    \"currency\": \"USD\"\n  },\n  \"bagsLb\": 50,\n  \"age\": 34\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"SurJet transformado\", function () { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.collectionVariables.set(\"idReservaSurJet\", data.idReserva);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Transformar CaribeAir",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/transformaciones/caribeair"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 99812,\n  \"nombre\": \"Ana Garcia\",\n  \"fecha\": \"04/03/2026\",\n  \"precio\": \"4,500.00\",\n  \"maleta\": \"1 pieza\",\n  \"tipoPasajero\": \"ADT\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"CaribeAir transformado\", function () { pm.response.to.have.status(201); });",
+              "const data = pm.response.json();",
+              "pm.collectionVariables.set(\"idReservaCaribeAir\", data.idReserva);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Listar reservas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reservas"
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Lista de reservas\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().total).to.be.at.least(3); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Consultar reserva AeroNorte",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reservas/{{idReservaAeroNorte}}"
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Consulta AeroNorte\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Consultar reserva SurJet",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reservas/{{idReservaSurJet}}"
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Consulta SurJet\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Consultar reserva CaribeAir",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/reservas/{{idReservaCaribeAir}}"
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Consulta CaribeAir\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 - Rechazar referencia duplicada AeroNorte",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/xml",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/transformaciones/aeronorte"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<reserva>\n  <pnr>QX7Z2A</pnr>\n  <pasajero>GARCIA/ANA</pasajero>\n  <fecha>03/04/2026</fecha>\n  <tarifa>4500</tarifa>\n  <equipaje>23</equipaje>\n  <menor>N</menor>\n</reserva>",
+          "options": {
+            "raw": {
+              "language": "xml"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"La referencia duplicada se rechaza\", function () { pm.response.to.have.status(409); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 - Rechazar localizador SurJet inválido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/transformaciones/surjet"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"booking\": \"SJ-123\",\n  \"firstName\": \"Ana\",\n  \"lastName\": \"Garcia\",\n  \"flightDate\": \"2026-04-03T08:30:00-06:00\",\n  \"fare\": {\n    \"amount\": 260,\n    \"currency\": \"USD\"\n  },\n  \"bagsLb\": 50,\n  \"age\": 34\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"El localizador inválido se rechaza\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

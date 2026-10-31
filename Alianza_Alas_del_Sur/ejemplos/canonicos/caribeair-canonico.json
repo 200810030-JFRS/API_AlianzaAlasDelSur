@@ -1,0 +1,23 @@
+{
+  "idReserva": "8e2d7d6a-9c45-4b9f-a2e1-031c00a00003",
+  "aerolinea": "CARIBEAIR",
+  "referenciaOrigen": "99812",
+  "vuelo": {
+    "fechaVuelo": "2026-04-03"
+  },
+  "pasajero": {
+    "tipo": "ADULTO",
+    "nombre": "Ana",
+    "apellido": "Garcia"
+  },
+  "tarifa": {
+    "importe": 4500.0,
+    "moneda": "MXN"
+  },
+  "equipaje": {
+    "numeroPiezas": 1,
+    "unidadOrigen": "PIEZA",
+    "valorOrigen": "1 pieza",
+    "limiteKgPorPieza": 23.0
+  }
+}

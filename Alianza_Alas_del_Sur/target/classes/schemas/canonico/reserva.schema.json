@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alasdelsur.example/schemas/reserva.schema.json",
+  "title": "Reserva canónica de Alianza Alas del Sur",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "idReserva",
+    "aerolinea",
+    "referenciaOrigen",
+    "vuelo",
+    "pasajero",
+    "tarifa",
+    "equipaje"
+  ],
+  "properties": {
+    "idReserva": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "aerolinea": {
+      "type": "string",
+      "enum": [
+        "AERONORTE",
+        "SURJET",
+        "CARIBEAIR"
+      ]
+    },
+    "referenciaOrigen": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "vuelo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fechaVuelo"
+      ],
+      "properties": {
+        "fechaVuelo": {
+          "type": "string",
+          "format": "date"
+        },
+        "horaLocal": {
+          "type": "string",
+          "format": "time"
+        },
+        "desfaseUtc": {
+          "type": "string",
+          "pattern": "^(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$"
+        }
+      }
+    },
+    "pasajero": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tipo",
+            "nombre",
+            "apellido"
+          ],
+          "properties": {
+            "tipo": {
+              "const": "ADULTO"
+            },
+            "nombre": {
+              "type": "string",
+              "minLength": 1
+            },
+            "apellido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "edad": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tipo",
+            "nombre",
+            "apellido"
+          ],
+          "properties": {
+            "tipo": {
+              "const": "MENOR"
+            },
+            "nombre": {
+              "type": "string",
+              "minLength": 1
+            },
+            "apellido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "edad": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tipo",
+            "nombre",
+            "apellido"
+          ],
+          "properties": {
+            "tipo": {
+              "const": "INFANTE"
+            },
+            "nombre": {
+              "type": "string",
+              "minLength": 1
+            },
+            "apellido": {
+              "type": "string",
+              "minLength": 1
+            },
+            "edad": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "tarifa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "importe",
+        "moneda"
+      ],
+      "properties": {
+        "importe": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "multipleOf": 0.01
+        },
+        "moneda": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      }
+    },
+    "equipaje": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unidadOrigen",
+        "valorOrigen"
+      ],
+      "properties": {
+        "pesoTotalKg": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "multipleOf": 0.01
+        },
+        "numeroPiezas": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unidadOrigen": {
+          "type": "string",
+          "enum": [
+            "KG",
+            "LB",
+            "PIEZA"
+          ]
+        },
+        "valorOrigen": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limiteKgPorPieza": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "multipleOf": 0.01
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "pesoTotalKg"
+          ]
+        },
+        {
+          "required": [
+            "numeroPiezas"
+          ]
+        }
+      ]
+    }
+  }
+}

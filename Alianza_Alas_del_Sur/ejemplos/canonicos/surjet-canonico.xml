@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reservaCanonica xmlns="https://alasdelsur.example/canonico" idReserva="8e2d7d6a-9c45-4b9f-a2e1-031c00a00002">
+    <aerolinea>SURJET</aerolinea>
+    <referenciaOrigen>SJ-88412</referenciaOrigen>
+    <vuelo>
+        <fechaVuelo>2026-04-03</fechaVuelo>
+        <horaLocal>08:30:00</horaLocal>
+        <desfaseUtc>-06:00</desfaseUtc>
+    </vuelo>
+    <pasajero><adulto tipo="ADULTO"><nombre>Ana</nombre><apellido>García</apellido><edad>34</edad></adulto></pasajero>
+    <tarifa>
+        <importe>260.00</importe>
+        <moneda>USD</moneda>
+    </tarifa>
+    <equipaje>
+        <pesoTotalKg>22.68</pesoTotalKg>
+        <unidadOrigen>LB</unidadOrigen>
+        <valorOrigen>50</valorOrigen>
+    </equipaje>
+</reservaCanonica>

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reserva de origen SurJet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "booking",
+    "firstName",
+    "lastName",
+    "flightDate",
+    "fare",
+    "bagsLb",
+    "age"
+  ],
+  "properties": {
+    "booking": {
+      "type": "string",
+      "pattern": "^SJ-[0-9]{5}$"
+    },
+    "firstName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lastName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "flightDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "fare": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      }
+    },
+    "bagsLb": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}
